@@ -11,30 +11,18 @@
 |
 */
 
-Route::get('/', array(
-	'as' => 'home',
-	'uses' => 'HomeController@index'
-));
+Route::get('/', array('as' => 'home', 'uses' => 'HomeController@index'));
 
 Route::get('login', 'SessionsController@create');
 Route::get('logout', 'SessionsController@destroy');
-Route::resource('sessions', 'SessionsController');
+Route::resource('sessions', 'SessionsController', array('only' => array('create', 'store', 'destroy')));
 
 Route::get('signup', 'UsersController@create');
-// Route::get('profile', array('before' => 'auth', 'uses' => 'UsersController@show'));
-Route::resource('users', 'UsersController');
+Route::resource('users', 'UsersController', array('only' => array('create', 'store')));
 
 Route::controller('password', 'RemindersController');
 
 Route::get('activate/{confirmationToken}', 'UsersController@activate');
-
-// Route::group(array('namespace' => 'Admin',
-// 		'prefix' => 'admin',
-// 		'before' => 'auth'
-// 	),	function() {
-// 		Route::resource('users', 'UsersController');
-// 	}
-// );
 
 Route::group(array('before' => 'auth'), function() {
 	Route::get('profile', array('uses' => 'UsersController@show'));

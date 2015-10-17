@@ -4,7 +4,6 @@ class SessionsController extends \BaseController {
 
 	/**
 	 * Show the form for creating a new resource.
-	 * GET /sessions/create
 	 *
 	 * @return Response
 	 */
@@ -15,31 +14,28 @@ class SessionsController extends \BaseController {
 
 	/**
 	 * Store a newly created resource in storage.
-	 * POST /sessions
 	 *
 	 * @return Response
 	 */
 	public function store()
 	{
-		$creds = array(
+		$credentials = array(
 			'email' => Input::get('email'),
 			'password' => Input::get('password'),
 			'is_confirmed' => 1
 		);
-		$remember = Input::get('remember_me');
 
-		if(Auth::attempt($creds, $remember)) {
+		$remember = Input::get('remember_me') == '1';
+
+		if(Auth::attempt($credentials, $remember)) {
 			return Redirect::intended('/')->with('alert-success', 'You have been logged in');
 		}else{
-			return Redirect::back()
-					->withInput()
-					->with('alert-warning', 'Incorrect login');
+			return Redirect::back()->with('alert-warning', 'Incorrect login')->withInput();
 		}
 	}
 
 	/**
 	 * Remove the specified resource from storage.
-	 * DELETE /sessions
 	 *
 	 * @return Response
 	 */

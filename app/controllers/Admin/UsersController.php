@@ -38,6 +38,7 @@ class UsersController extends \BaseController {
 		$data = Input::all();
 
 		$validator = Validator::make($data, User::getRules());
+		$data['password'] = Hash::make($data['password']);
 
 		if($validator->fails()) {
 			return Redirect::back()->withErrors($validator)->withInput();
@@ -47,7 +48,7 @@ class UsersController extends \BaseController {
 
 		$user->fill($data);
 		$user->is_confirmed = true;
-		$user->is_admin =(bool)array_get($data, 'is_admin');
+		$user->is_admin = (bool)array_get($data, 'is_admin');
 
 		$user->save();
 
@@ -107,7 +108,6 @@ class UsersController extends \BaseController {
 			return Redirect::back()->withErrors($validator)->withInput();
 		}
 
-		// Hash the password if present
 		if(array_key_exists('password', $data)) {
 			$data['password'] = Hash::make($data['password']);
 		}

@@ -25,7 +25,7 @@
 
 			<div class="form-group">
 				<div class="col-sm-offset-3 col-sm-9">
-					{{ Form::checkbox('remember_me', '1', Input::old('remember_me'), array('id' => 'remember_me')) }}
+					{{ Form::checkbox('remember_me', '1', null, array('id' => 'remember_me')) }}
 					{{ Form::label('remember_me', 'Remember me') }}
 					
 				</div>

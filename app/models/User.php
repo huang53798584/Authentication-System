@@ -34,7 +34,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	public static function activate($confirmation_token)
 	{
-		$user = User::whereConfirmationToken($confirmation_token)->first();
+		$user = User::whereConfirmation_token($confirmation_token)->first();
 		if($user){
 			$user->is_confirmed = 1;
 			$user->confirmation_token = null;
